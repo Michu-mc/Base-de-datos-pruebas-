@@ -1,29 +1,36 @@
--- Tabla de personal
+-- Tabla de personal médico/enfermero en turno
 CREATE TABLE personal (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
-    cargo VARCHAR(100),
-    fecha_ingreso DATE DEFAULT CURRENT_DATE,
+    cargo VARCHAR(100) NOT NULL,          -- Médico, Enfermero, Técnico, etc.
+    especialidad VARCHAR(100),              -- Medicina General, Pediatría, Traumatología, etc.
+    turno VARCHAR(20),                      -- Mañana, Tarde, Noche
     activo BOOLEAN DEFAULT TRUE
 );
 
--- Tabla de entradas (movimientos de entrada de inventario)
+-- Tabla de entradas (pacientes que ingresan a urgencias)
 CREATE TABLE entradas (
     id SERIAL PRIMARY KEY,
-    producto VARCHAR(200) NOT NULL,
-    cantidad INTEGER NOT NULL CHECK (cantidad > 0),
+    paciente_nombre VARCHAR(100) NOT NULL,
+    paciente_apellido VARCHAR(100) NOT NULL,
+    edad INTEGER,
+    genero VARCHAR(20),
+    motivo_consulta TEXT NOT NULL,          -- Motivo de la visita
     fecha_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    personal_id INTEGER REFERENCES personal(id) ON DELETE SET NULL,
-    observaciones TEXT
+    prioridad INTEGER CHECK (prioridad BETWEEN 1 AND 5),  -- 1=Crítico, 5=Menor urgencia
+    personal_id INTEGER REFERENCES personal(id) ON DELETE SET NULL,  -- Médico asignado
+    estado VARCHAR(50) DEFAULT 'En atención'  -- En atención, Estable, Crítico, etc.
 );
 
--- Tabla de salidas (movimientos de salida de inventario)
+-- Tabla de salidas (pacientes que egresan de urgencias)
 CREATE TABLE salidas (
     id SERIAL PRIMARY KEY,
-    producto VARCHAR(200) NOT NULL,
-    cantidad INTEGER NOT NULL CHECK (cantidad > 0),
+    entrada_id INTEGER REFERENCES entradas(id) ON DELETE CASCADE,  -- Relación con la entrada
     fecha_salida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    personal_id INTEGER REFERENCES personal(id) ON DELETE SET NULL,
+    diagnostico TEXT,
+    tratamiento TEXT,
+    destino VARCHAR(100),                   -- Alta, Hospitalización, Referido, Fallecido
+    personal_id INTEGER REFERENCES personal(id) ON DELETE SET NULL,  -- Médico que dio el alta
     observaciones TEXT
 );
