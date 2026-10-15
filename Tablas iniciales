@@ -1,0 +1,29 @@
+-- Tabla de personal
+CREATE TABLE personal (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    cargo VARCHAR(100),
+    fecha_ingreso DATE DEFAULT CURRENT_DATE,
+    activo BOOLEAN DEFAULT TRUE
+);
+
+-- Tabla de entradas (movimientos de entrada de inventario)
+CREATE TABLE entradas (
+    id SERIAL PRIMARY KEY,
+    producto VARCHAR(200) NOT NULL,
+    cantidad INTEGER NOT NULL CHECK (cantidad > 0),
+    fecha_entrada TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    personal_id INTEGER REFERENCES personal(id) ON DELETE SET NULL,
+    observaciones TEXT
+);
+
+-- Tabla de salidas (movimientos de salida de inventario)
+CREATE TABLE salidas (
+    id SERIAL PRIMARY KEY,
+    producto VARCHAR(200) NOT NULL,
+    cantidad INTEGER NOT NULL CHECK (cantidad > 0),
+    fecha_salida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    personal_id INTEGER REFERENCES personal(id) ON DELETE SET NULL,
+    observaciones TEXT
+);
