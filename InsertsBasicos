@@ -1,0 +1,23 @@
+-- Insertar personal (5 registros)
+INSERT INTO personal (nombre, apellido, cargo, especialidad, turno) VALUES
+('Carlos', 'Mendoza', 'Médico', 'Medicina General', 'Mañana'),
+('Ana', 'Rodríguez', 'Médico', 'Pediatría', 'Tarde'),
+('Luis', 'García', 'Enfermero', 'Urgencias', 'Noche'),
+('María', 'López', 'Médico', 'Traumatología', 'Noche'),
+('Jorge', 'Pérez', 'Enfermero', 'Urgencias', 'Mañana');
+
+-- Insertar entradas (5 registros)
+INSERT INTO entradas (paciente_nombre, paciente_apellido, edad, genero, motivo_consulta, prioridad, personal_id, estado) VALUES
+('Pedro', 'Ramírez', 45, 'Masculino', 'Dolor torácico intenso', 1, 1, 'Crítico'),
+('Sofía', 'Hernández', 8, 'Femenino', 'Fiebre alta y vómitos', 2, 2, 'En atención'),
+('Miguel', 'Torres', 67, 'Masculino', 'Dificultad respiratoria', 1, 4, 'Crítico'),
+('Laura', 'Díaz', 32, 'Femenino', 'Fractura de brazo tras caída', 3, 4, 'Estable'),
+('Ricardo', 'Morales', 28, 'Masculino', 'Herida cortante en mano', 4, 3, 'Estable');
+
+-- Insertar salidas (5 registros)
+INSERT INTO salidas (entrada_id, diagnostico, tratamiento, destino, personal_id, observaciones) VALUES
+(1, 'Infarto agudo de miocardio', 'Administración de anticoagulantes, monitoreo continuo', 'Hospitalización', 1, 'Paciente transferido a UCI'),
+(2, 'Gastroenteritis aguda', 'Hidratación intravenosa, antieméticos', 'Alta', 2, 'Mejoría favorable, reposo en casa'),
+(3, 'Neumonía bilateral', 'Antibióticos IV, oxigenoterapia', 'Hospitalización', 4, 'Requiere observación en sala general'),
+(4, 'Fractura de radio derecho', 'Reducción cerrada, yeso por 6 semanas', 'Alta', 4, 'Cita de seguimiento en traumatología'),
+(5, 'Herida cortante superficial', 'Limpieza, sutura de 3 puntos, antitetánica', 'Alta', 3, 'Indicaciones de curación cada 24 horas');
